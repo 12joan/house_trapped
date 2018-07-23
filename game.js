@@ -13,6 +13,7 @@ var level = {
 
   create: function () {
     player = game.add.sprite(400, 300, 'player');
+    game.stage.backgroundColor = 0xffffff
     var ratio = 870 / 298;
     player.width = 50;
     player.height = player.width * ratio;
