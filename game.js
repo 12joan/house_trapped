@@ -2,8 +2,7 @@ var player;
 var game = new Phaser.Game(
   800,
   600, 
-  Phaser.CANVAS,
-  'game-container'
+  Phaser.CANVAS
 );
 
 var level = {
@@ -12,11 +11,16 @@ var level = {
   },
 
   create: function () {
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    game.stage.backgroundColor = 0xffffff;
+
     player = game.add.sprite(400, 300, 'player');
-    game.stage.backgroundColor = 0xffffff
     var ratio = 870 / 298;
     player.width = 50;
     player.height = player.width * ratio;
+
+    game.physics.p2.enable(player);
+    game.physics.p2.gravity.y = 100;
   }
 }
 
