@@ -1,28 +1,24 @@
-var config = {
-  type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  physics: {
-      default: 'arcade',
-      arcade: {
-          gravity: { y: 200 }
-      }
+var player;
+var game = new Phaser.Game(
+  800,
+  600, 
+  Phaser.CANVAS,
+  'game-container'
+);
+
+var level = {
+  preload: function () {
+    game.load.image('player', 'player.png');
   },
-  scene: {
-      preload: preload,
-      create: create
+
+  create: function () {
+    player = game.add.sprite(400, 300, 'player');
+    var ratio = 870 / 298;
+    player.width = 50;
+    player.height = player.width * ratio;
   }
-};
-
-var game = new Phaser.Game(config);
-
-function preload () {
-  this.load.setBaseURL('http://labs.phaser.io');
-
-  this.load.image('logo', 'assets/sprites/phaser3-logo.png');
 }
 
-function create () {
-  this.add.sprite(400, 300, 'logo')
-}
+game.state.add('level', level);
+game.state.start('level');
 
