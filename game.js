@@ -1,4 +1,6 @@
 var player;
+var platformCollisionGroup;
+var playerCollisionGroup;
 var game = new Phaser.Game(
   800,
   600, 
@@ -17,10 +19,13 @@ var level = {
     player = new Player();
     player.init(game);
 
-    game.physics.p2.gravity.y = 100;
+    game.physics.p2.gravity.y = 600;
+    game.physics.p2.restitution = 0;
   }, 
 
   update: function () {
+    player.sprite.body.setZeroRotation();
+
     var keyH     = game.input.keyboard.addKey(Phaser.Keyboard.H);
     var keyA     = game.input.keyboard.addKey(Phaser.Keyboard.A);
     var keyLeft  = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
@@ -38,10 +43,14 @@ var level = {
 
     if (left) {
       player.walk(-1);
-    } else if (up) {
-      player.jump();
     } else if (right) {
       player.walk(1);
+    } else {
+      player.stop_walking();
+    }
+
+    if (up) {
+      player.jump();
     }
   }
 }
