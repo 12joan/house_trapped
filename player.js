@@ -7,4 +7,12 @@ class Player {
 
     game.physics.p2.enable(this.sprite);
   }
+
+  walk(direction) {
+    alert(direction);
+  }
+
+  jump() {
+    alert("Whee!");
+  }
 }

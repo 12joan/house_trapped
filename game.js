@@ -18,6 +18,31 @@ var level = {
     player.init(game);
 
     game.physics.p2.gravity.y = 100;
+  }, 
+
+  update: function () {
+    var keyH     = game.input.keyboard.addKey(Phaser.Keyboard.H);
+    var keyA     = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    var keyLeft  = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    var keyK     = game.input.keyboard.addKey(Phaser.Keyboard.K);
+    var keyW     = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    var keyUp    = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+    var keyL     = game.input.keyboard.addKey(Phaser.Keyboard.L);
+    var keyD     = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    var keyRight = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+    var keySpace = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    var left  = keyH.isDown || keyA.isDown || keyLeft.isDown;
+    var up    = keyK.isDown || keyW.isDown || keyUp.isDown    || keySpace.isDown;
+    var right = keyL.isDown || keyD.isDown || keyRight.isDown;
+
+    if (left) {
+      player.walk(-1);
+    } else if (up) {
+      player.jump();
+    } else if (right) {
+      player.walk(1);
+    }
   }
 }
 
