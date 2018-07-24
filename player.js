@@ -11,6 +11,7 @@ class Player {
 
     game.physics.p2.enable(this.sprite);
 
+    this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
     this.sprite.body.fixedRotation = true;
 
     this.sprite.body.setCollisionGroup( playerCollisionGroup );
