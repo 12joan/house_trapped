@@ -1,7 +1,7 @@
 var on_ground, can_jump, land_timer;
 
 class Player { 
-  init() {
+  constructor() {
     this.sprite = game.add.sprite(400, 300, 'player');
     var ratio = 870 / 298;
     this.sprite.height = 150;

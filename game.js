@@ -23,11 +23,9 @@ var level = {
     platforms.physicsBodyType = Phaser.Physics.P2JS;
 
     player = new Player();
-    player.init();
     game.camera.follow(player.sprite);
 
-    platform = new Platform();
-    platform.init(400, 580, 580);
+    platform = new Platform(400, 580, 580);
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
