@@ -1,8 +1,8 @@
 var on_ground, can_jump, land_timer;
 
 class Player { 
-  constructor() {
-    this.sprite = game.add.sprite(400, 300, 'player');
+  constructor(x, y) {
+    this.sprite = game.add.sprite(x, y, 'player');
     var ratio = 870 / 298;
     this.sprite.height = 150;
     this.sprite.width = this.sprite.height / ratio;
@@ -10,12 +10,15 @@ class Player {
     this.sprite.animations.add("run", [1, 2]);
 
     game.physics.p2.enable(this.sprite);
+
+    this.sprite.body.fixedRotation = true;
+
     this.sprite.body.setCollisionGroup( playerCollisionGroup );
     this.sprite.body.collides([ playerCollisionGroup, platformCollisionGroup ]);
     this.sprite.body.onBeginContact.add(this.landed);
 
-    on_ground = true;
-    can_jump = true;
+    on_ground = false;
+    can_jump = false;
   }
 
   walk(direction) {

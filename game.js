@@ -15,6 +15,8 @@ var level = {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.stage.backgroundColor = 0xffffff;
 
+    game.world.setBounds(0, 0, 10000, 2000);
+
     platformCollisionGroup = game.physics.p2.createCollisionGroup();
     playerCollisionGroup = game.physics.p2.createCollisionGroup();
 
@@ -22,18 +24,19 @@ var level = {
     platforms.enableBody = true;
     platforms.physicsBodyType = Phaser.Physics.P2JS;
 
-    player = new Player();
-    game.camera.follow(player.sprite);
+    player = new Player(400, 1800);
+    game.camera.follow(player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
 
-    platform = new Platform(400, 580, 580);
+    new Platform(400, 1980, 580);
+    new Platform(200, 1800, 100);
+    new Platform(350, 1620, 100);
+    new Platform(500, 1440, 100);
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
   }, 
 
   update: function () {
-    player.sprite.body.rotation = 0;
-
     var keyH     = game.input.keyboard.addKey(Phaser.Keyboard.H);
     var keyA     = game.input.keyboard.addKey(Phaser.Keyboard.A);
     var keyLeft  = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
