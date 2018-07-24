@@ -1,1 +1,1 @@
-make server
+python -m SimpleHTTPServer
