@@ -20,7 +20,7 @@ var level = {
     player.init();
 
     platform = new Platform();
-    platform.init();
+    platform.init(400, 580, 580);
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
