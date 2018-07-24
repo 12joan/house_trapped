@@ -9,7 +9,7 @@ var game = new Phaser.Game(
 
 var level = {
   preload: function () {
-    game.load.image('player', 'player.png');
+    game.load.spritesheet('player', 'player.png', 298, 870);
   },
 
   create: function () {
