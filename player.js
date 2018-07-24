@@ -1,4 +1,4 @@
-var on_ground, land_timer;
+var on_ground, can_jump, land_timer;
 
 class Player { 
   init() {
@@ -15,6 +15,7 @@ class Player {
     this.sprite.body.onBeginContact.add(this.landed);
 
     on_ground = true;
+    can_jump = true;
   }
 
   walk(direction) {
@@ -33,19 +34,21 @@ class Player {
   }
 
   jump() {
-    if ( on_ground ) {
+    if ( can_jump ) {
       this.sprite.body.velocity.y = -500;
       on_ground = false;
+      can_jump = false;
       this.sprite.animations.stop("run");
       this.sprite.frame = 3;
     }
   }
 
   landed() {
+    on_ground = true;
     player.sprite.frame = 0;
     clearTimeout( land_timer );
     land_timer = setTimeout(function () {
-      on_ground = true;
+      can_jump = true;
     }, 500);
   }
 }
