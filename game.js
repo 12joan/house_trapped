@@ -1,6 +1,5 @@
-var player;
-var platformCollisionGroup;
-var playerCollisionGroup;
+var player, platformCollisionGroup, playerCollisionGroup, platforms;
+
 var game = new Phaser.Game(
   800,
   600, 
@@ -16,6 +15,13 @@ var level = {
     game.physics.startSystem(Phaser.Physics.P2JS);
     game.stage.backgroundColor = 0xffffff;
 
+    platformCollisionGroup = game.physics.p2.createCollisionGroup();
+    playerCollisionGroup = game.physics.p2.createCollisionGroup();
+
+    platforms = game.add.group();
+    platforms.enableBody = true;
+    platforms.physicsBodyType = Phaser.Physics.P2JS;
+
     player = new Player();
     player.init();
 
@@ -23,7 +29,7 @@ var level = {
     platform.init(400, 580, 580);
 
     game.physics.p2.gravity.y = 600;
-    game.physics.p2.restitution = 0;
+    game.physics.p2.restitution = 0.3;
   }, 
 
   update: function () {

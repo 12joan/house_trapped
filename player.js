@@ -10,7 +10,10 @@ class Player {
     this.sprite.animations.add("run", [1, 2]);
 
     game.physics.p2.enable(this.sprite);
-    player.sprite.body.onBeginContact.add(this.landed);
+    this.sprite.body.setCollisionGroup( playerCollisionGroup );
+    this.sprite.body.collides([ playerCollisionGroup, platformCollisionGroup ]);
+    this.sprite.body.onBeginContact.add(this.landed);
+
     on_ground = true;
   }
 
