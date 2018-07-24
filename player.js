@@ -1,4 +1,4 @@
-var on_ground, can_jump, land_timer;
+var on_ground, land_timer;
 
 class Player { 
   constructor(x, y) {
@@ -17,14 +17,11 @@ class Player {
     this.sprite.body.setCollisionGroup( playerCollisionGroup );
     this.sprite.body.collides([ playerCollisionGroup, platformCollisionGroup ]);
     this.sprite.body.onBeginContact.add(this.landed);
-
-    on_ground = false;
-    can_jump = false;
   }
 
   walk(direction) {
     this.sprite.body.velocity.x = direction * 250;
-    if ( on_ground ) {
+    if ( this.can_jump ) {
       this.sprite.animations.play("run", 4, true);
     }
   }
@@ -32,27 +29,34 @@ class Player {
   stop_walking() {
     this.sprite.body.velocity.x *= 0.9;
     this.sprite.animations.stop("run");
-    if ( on_ground ) {
+    if ( this.can_jump ) {
       this.sprite.frame = 0;
     }
   }
 
   jump() {
-    if ( can_jump ) {
+    if ( this.can_jump ) {
       this.sprite.body.velocity.y = -500;
-      on_ground = false;
-      can_jump = false;
       this.sprite.animations.stop("run");
       this.sprite.frame = 3;
     }
   }
 
+  get can_jump() {
+    var yAxis = p2.vec2.fromValues(0, 1);    
+    var result = false;    
+    for (var i = 0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++)    {        
+      var c = game.physics.p2.world.narrowphase.contactEquations[i];        
+      if (c.bodyA === this.sprite.body.data || c.bodyB === this.sprite.body.data)        {            
+        var d = p2.vec2.dot(c.normalA, yAxis);             
+        if (c.bodyA === this.sprite.body.data) d *= -1;            
+        if (d > 0.5) result = true;        
+      }    
+    }        
+    return result;
+  }
+
   landed() {
-    on_ground = true;
     player.sprite.frame = 0;
-    clearTimeout( land_timer );
-    land_timer = setTimeout(function () {
-      can_jump = true;
-    }, 500);
   }
 }
