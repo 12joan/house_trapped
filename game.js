@@ -17,7 +17,7 @@ var level = {
     game.stage.backgroundColor = 0xffffff;
 
     player = new Player();
-    player.init(game);
+    player.init();
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
