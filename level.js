@@ -4,11 +4,13 @@ var level = {
   preload: function () {
     game.load.spritesheet('player', 'player.png', 298, 870);
     game.load.spritesheet('fork', 'fork.png', 298, 870);
+    game.load.spritesheet('background', 'house.png');
   },
 
   create: function () {
     game.physics.startSystem(Phaser.Physics.P2JS);
-    game.stage.backgroundColor = 0xffffff;
+
+    game.add.sprite(0, 0, 'background');
 
     game.world.setBounds(0, 0, 10000, 2000);
 
@@ -34,6 +36,7 @@ var level = {
     new Platform(45, 1789, 62);
     new Platform(188, 1598, 57);
     new Platform(334, 1795, 91);
+    new Platform(1000, 1850, 500);
 
     new Enemy(580, 1820);
 
