@@ -1,8 +1,9 @@
-var player, platformCollisionGroup, playerCollisionGroup, platforms;
+var player, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, platforms;
 
 var level = {
   preload: function () {
     game.load.spritesheet('player', 'player.png', 298, 870);
+    game.load.spritesheet('fork', 'fork.png', 298, 870);
   },
 
   create: function () {
@@ -13,6 +14,15 @@ var level = {
 
     platformCollisionGroup = game.physics.p2.createCollisionGroup();
     playerCollisionGroup = game.physics.p2.createCollisionGroup();
+    enemyCollisionGroup = game.physics.p2.createCollisionGroup();
+
+    platforms = game.add.group();
+    platforms.enableBody = true;
+    platforms.physicsBodyType = Phaser.Physics.P2JS;
+
+    enemies = game.add.group();
+    enemies.enableBody = true;
+    enemies.physicsBodyType = Phaser.Physics.P2JS;
 
     platforms = game.add.group();
     platforms.enableBody = true;
@@ -25,13 +35,15 @@ var level = {
     new Platform(188, 1598, 57);
     new Platform(334, 1795, 91);
 
+    new Enemy(580, 1820);
+
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
   }, 
 
   update: function () {
     if ( player.sprite.position.y > 2000 ) {
-      game.state.start('level');
+      kill_rick();
     }
 
     var keyH     = game.input.keyboard.addKey(Phaser.Keyboard.H);
@@ -61,4 +73,8 @@ var level = {
       player.jump();
     }
   }
+}
+
+function kill_rick() {
+  game.state.start('level');
 }

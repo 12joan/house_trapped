@@ -15,7 +15,7 @@ class Player {
     this.sprite.body.fixedRotation = true;
 
     this.sprite.body.setCollisionGroup( playerCollisionGroup );
-    this.sprite.body.collides([ playerCollisionGroup, platformCollisionGroup ]);
+    this.sprite.body.collides([ enemyCollisionGroup, platformCollisionGroup ]);
     this.sprite.body.onBeginContact.add(this.landed);
   }
 
