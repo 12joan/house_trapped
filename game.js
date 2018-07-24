@@ -24,12 +24,13 @@ var level = {
 
     player = new Player();
     player.init();
+    game.camera.follow(player.sprite);
 
     platform = new Platform();
     platform.init(400, 580, 580);
 
     game.physics.p2.gravity.y = 600;
-    game.physics.p2.restitution = 0.3;
+    game.physics.p2.restitution = 0;
   }, 
 
   update: function () {

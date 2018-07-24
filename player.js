@@ -19,23 +19,30 @@ class Player {
 
   walk(direction) {
     this.sprite.body.velocity.x = direction * 250;
-    this.sprite.animations.play("run", 4, true);
+    if ( on_ground ) {
+      this.sprite.animations.play("run", 4, true);
+    }
   }
 
   stop_walking() {
     this.sprite.body.velocity.x *= 0.9;
     this.sprite.animations.stop("run");
-    this.sprite.frame = 0;
+    if ( on_ground ) {
+      this.sprite.frame = 0;
+    }
   }
 
   jump() {
     if ( on_ground ) {
       this.sprite.body.velocity.y = -500;
       on_ground = false;
+      this.sprite.animations.stop("run");
+      this.sprite.frame = 3;
     }
   }
 
   landed() {
+    player.sprite.frame = 0;
     clearTimeout( land_timer );
     land_timer = setTimeout(function () {
       on_ground = true;
