@@ -7,7 +7,7 @@ class Player {
     this.sprite.height = 150;
     this.sprite.width = this.sprite.height / ratio;
 
-    this.sprite.animations.add("run", [1, 2]);
+    this.sprite.animations.add("run", [1, 2, 3, 4]);
 
     game.physics.p2.enable(this.sprite);
 
@@ -38,7 +38,7 @@ class Player {
     if ( this.can_jump ) {
       this.sprite.body.velocity.y = -500;
       this.sprite.animations.stop("run");
-      this.sprite.frame = 3;
+      this.sprite.frame = 5;
     }
   }
 
