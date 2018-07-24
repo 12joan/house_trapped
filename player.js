@@ -1,11 +1,11 @@
-var on_ground;
+var on_ground, land_timer;
 
 class Player { 
   init() {
     this.sprite = game.add.sprite(400, 300, 'player');
     var ratio = 870 / 298;
-    this.sprite.width = 50;
-    this.sprite.height = this.sprite.width * ratio;
+    this.sprite.height = 150;
+    this.sprite.width = this.sprite.height / ratio;
 
     this.sprite.animations.add("run", [1, 2]);
 
@@ -33,6 +33,9 @@ class Player {
   }
 
   landed() {
-    on_ground = true;
+    clearTimeout( land_timer );
+    land_timer = setTimeout(function () {
+      on_ground = true;
+    }, 500);
   }
 }

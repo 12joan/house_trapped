@@ -19,12 +19,15 @@ var level = {
     player = new Player();
     player.init();
 
+    platform = new Platform();
+    platform.init();
+
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
   }, 
 
   update: function () {
-    player.sprite.body.setZeroRotation();
+    player.sprite.body.rotation = 0;
 
     var keyH     = game.input.keyboard.addKey(Phaser.Keyboard.H);
     var keyA     = game.input.keyboard.addKey(Phaser.Keyboard.A);
