@@ -6,6 +6,9 @@ var level = {
     game.load.text('level_data1' ,'/level 1.json')
     game.load.spritesheet('fork', 'fork.png', 298, 870);
     game.load.spritesheet('background', 'house.png');
+    game.load.audio('jump', 'jump.wav');
+    game.load.audio('fall', 'fall.wav');
+    game.load.audio('stab', 'stab.wav');
   },
 
   create: function () {
@@ -57,7 +60,7 @@ var level = {
 
   update: function () {
     if ( player.sprite.position.y > 2000 ) {
-      kill_rick();
+      player.die('fall', 3000);
     }
 
     var keyH     = game.input.keyboard.addKey(Phaser.Keyboard.H);
@@ -89,6 +92,3 @@ var level = {
   }
 }
 
-function kill_rick() {
-  game.state.start('level');
-}

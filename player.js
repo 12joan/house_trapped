@@ -39,6 +39,8 @@ class Player {
       this.sprite.body.velocity.y = -500;
       this.sprite.animations.stop("run");
       this.sprite.frame = 5;
+      var sound = game.add.sound('jump', 0.2, false);
+      sound.play();
     }
   }
 
@@ -58,5 +60,20 @@ class Player {
 
   landed() {
     player.sprite.frame = 0;
+  }
+
+  die(sound, duration) {
+    if ( this.dead ) {
+      return;
+    }
+
+    this.dead = true;
+
+    var sound = game.add.sound(sound, 1, false);
+    sound.play();
+    player.sprite.kill();
+    setTimeout(function () {
+      game.state.start('level');
+    }, duration);
   }
 }
