@@ -1,6 +1,6 @@
 class Platform {
   constructor(x, y, length) {
-    this.sprite = platforms.create(x, y, 'platform');
+    this.sprite = platforms.create(x + ( length / 2 ), y, 'platform');
     this.sprite.anchor.setTo(0,0);
     this.sprite.body.setRectangle(length, 20);
     this.sprite.width = length;
