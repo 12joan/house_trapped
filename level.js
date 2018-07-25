@@ -39,10 +39,12 @@ var level = {
     doors.enableBody = true;
     doors.physicsBodyType = Phaser.Physics.P2JS;
 
-    player = new Player(50, 1700);
+//    player = new Player(50, 1700);
+	lvldata1=JSON.parse(game.cache.getText('level_data1'))
+	curr=lvldata1.rick
+	player = new Player(curr.x,curr.y)
     game.camera.follow(player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
-
-    lvldata1=JSON.parse(game.cache.getText('level_data1'))
+	
 
     for (i=0;i<lvldata1.platforms.length;i+=1) {
         curr=lvldata1.platforms[i]
@@ -58,6 +60,8 @@ var level = {
        curr=lvldata1.doors[i]
        new Door(curr.x,curr.y,{"x":curr.tx,"y":curr.ty})
     }
+	curr=lvldata1.final_door
+	new FinalDoor(curr.x,curr.y)
 //    new Platform(45, 1789, 62);
 //    new Platform(188, 1598, 57);
 //    new Platform(334, 1795, 91);
@@ -69,7 +73,7 @@ var level = {
 //    new Enemy('fork', 480, 1820);
 //    new Enemy('knife', 180, 1760);
 
-    new FinalDoor(400, 1300);
+//    new FinalDoor(400, 1300);
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
