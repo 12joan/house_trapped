@@ -1,4 +1,4 @@
-var player, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, platforms;
+var player, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, doorCollisionGroup, platforms;
 
 var level = {
   preload: function () {
@@ -8,6 +8,7 @@ var level = {
     game.load.spritesheet('knife', 'knife.png', 298, 870);
     game.load.spritesheet('background', 'house.png');
     game.load.spritesheet('platform', 'Platform.png');
+    game.load.spritesheet('door', 'door.png');
     game.load.audio('jump', 'jump.wav');
     game.load.audio('fall', 'fall.wav');
     game.load.audio('stab', 'stab.wav');
@@ -23,6 +24,7 @@ var level = {
     platformCollisionGroup = game.physics.p2.createCollisionGroup();
     playerCollisionGroup = game.physics.p2.createCollisionGroup();
     enemyCollisionGroup = game.physics.p2.createCollisionGroup();
+    doorCollisionGroup = game.physics.p2.createCollisionGroup();
 
     platforms = game.add.group();
     platforms.enableBody = true;
@@ -32,9 +34,9 @@ var level = {
     enemies.enableBody = true;
     enemies.physicsBodyType = Phaser.Physics.P2JS;
 
-    platforms = game.add.group();
-    platforms.enableBody = true;
-    platforms.physicsBodyType = Phaser.Physics.P2JS;
+    doors = game.add.group();
+    doors.enableBody = true;
+    doors.physicsBodyType = Phaser.Physics.P2JS;
 
     player = new Player(50, 1700);
     game.camera.follow(player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
@@ -60,6 +62,8 @@ var level = {
 
 //    new Enemy('fork', 480, 1820);
 //    new Enemy('knife', 180, 1760);
+
+    new Door(400, 1600, { x: 50, y: 0 });
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
