@@ -53,6 +53,11 @@ var level = {
         curr=lvldata1.enemies[i]
         new Enemy(curr.type,curr.x,curr.y,)
     }
+	
+	for (i=0;i<lvldata1.doors.length;i+=1) {
+       curr=lvldata1.doors[i]
+       new Door(curr.x,curr.y,{"x":curr.tx,"y":curr.ty})
+    }
 //    new Platform(45, 1789, 62);
 //    new Platform(188, 1598, 57);
 //    new Platform(334, 1795, 91);
@@ -64,7 +69,6 @@ var level = {
 //    new Enemy('fork', 480, 1820);
 //    new Enemy('knife', 180, 1760);
 
-    new Door(400, 1600, { x: 50, y: 0 });
     new FinalDoor(400, 1300);
 
     game.physics.p2.gravity.y = 600;
