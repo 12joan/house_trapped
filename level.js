@@ -9,6 +9,7 @@ var level = {
     game.load.spritesheet('background', 'house.png');
     game.load.spritesheet('platform', 'Platform.png');
     game.load.spritesheet('door', 'door.png');
+    game.load.spritesheet('final_door', 'final_door.png');
     game.load.audio('jump', 'jump.wav');
     game.load.audio('fall', 'fall.wav');
     game.load.audio('stab', 'stab.wav');
@@ -64,6 +65,7 @@ var level = {
 //    new Enemy('knife', 180, 1760);
 
     new Door(400, 1600, { x: 50, y: 0 });
+    new FinalDoor(400, 1300);
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
