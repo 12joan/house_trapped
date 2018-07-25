@@ -3,6 +3,7 @@ var player, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, p
 var level = {
   preload: function () {
     game.load.spritesheet('player', 'player.png', 298, 870);
+    game.load.text('level_data1' ,'/level 1.json')
     game.load.spritesheet('fork', 'fork.png', 298, 870);
     game.load.spritesheet('background', 'house.png');
   },
@@ -33,10 +34,20 @@ var level = {
     player = new Player(50, 1700);
     game.camera.follow(player.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
 
-    new Platform(45, 1789, 62);
-    new Platform(188, 1598, 57);
-    new Platform(334, 1795, 91);
-    new Platform(1000, 1850, 500);
+    lvldata1=JSON.parse(game.cache.getText('level_data1'))
+
+    for (i=0;i<lvldata1.platforms.length;i+=1) {
+        curr=lvldata1.platforms[i]
+        new Platform(curr.x1,curr.y,curr.x2-curr.x1)
+    }
+
+//    new Platform(45, 1789, 62);
+//    new Platform(188, 1598, 57);
+//    new Platform(334, 1795, 91);
+//    new Platform(45, 1789, 62);
+//    new Platform(188, 1598, 57);
+//    new Platform(334, 1795, 91);
+//    new Platform(1000, 1850, 500);
 
     new Enemy(580, 1820);
 
