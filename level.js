@@ -6,6 +6,7 @@ var level = {
     game.load.text('level_data1' ,'/level 1.json')
     game.load.spritesheet('fork', 'fork.png', 298, 870);
     game.load.spritesheet('background', 'house.png');
+    game.load.spritesheet('platform', 'Platform.png');
     game.load.audio('jump', 'jump.wav');
     game.load.audio('fall', 'fall.wav');
     game.load.audio('stab', 'stab.wav');
