@@ -14,6 +14,6 @@ class Enemy {
   }
 
   touched() {
-    kill_rick();
+    player.die('stab', 1000);
   }
 }
