@@ -1,6 +1,6 @@
 class Enemy {
-  constructor(x, y) {
-    this.sprite = enemies.create(x, y, 'fork');
+  constructor(type, x, y) {
+    this.sprite = enemies.create(x, y, type);
     var ratio = 870 / 298;
     this.sprite.height = 200;
     this.sprite.width = this.sprite.height / ratio;

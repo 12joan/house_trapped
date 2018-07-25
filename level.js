@@ -5,6 +5,7 @@ var level = {
     game.load.spritesheet('player', 'player.png', 298, 870);
     game.load.text('level_data1' ,'/level 1.json')
     game.load.spritesheet('fork', 'fork.png', 298, 870);
+    game.load.spritesheet('knife', 'knife.png', 298, 870);
     game.load.spritesheet('background', 'house.png');
     game.load.spritesheet('platform', 'Platform.png');
     game.load.audio('jump', 'jump.wav');
@@ -53,7 +54,8 @@ var level = {
 //    new Platform(334, 1795, 91);
 //    new Platform(1000, 1850, 500);
 
-    new Enemy(580, 1820);
+    new Enemy('fork', 480, 1820);
+    new Enemy('knife', 180, 1760);
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
