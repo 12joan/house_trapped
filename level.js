@@ -46,6 +46,10 @@ var level = {
         new Platform(curr.x1,curr.y,curr.x2-curr.x1)
     }
 
+    for (i=0;i<lvldata1.enemies.length;i+=1) {
+        curr=lvldata1.enemies[i]
+        new Enemy(curr.type,curr.x,curr.y,)
+    }
 //    new Platform(45, 1789, 62);
 //    new Platform(188, 1598, 57);
 //    new Platform(334, 1795, 91);
@@ -54,8 +58,8 @@ var level = {
 //    new Platform(334, 1795, 91);
 //    new Platform(1000, 1850, 500);
 
-    new Enemy('fork', 480, 1820);
-    new Enemy('knife', 180, 1760);
+//    new Enemy('fork', 480, 1820);
+//    new Enemy('knife', 180, 1760);
 
     game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
