@@ -1,4 +1,4 @@
-var player, all_doors, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, doorCollisionGroup, platforms;
+var music, player, all_doors, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, doorCollisionGroup, platforms;
 
 var level = {
   preload: function () {
@@ -11,6 +11,7 @@ var level = {
     game.load.spritesheet('door', 'door.png');
     game.load.spritesheet('final_door', 'final_door.png');
     game.load.spritesheet('hand', 'hand.png');
+    game.load.audio('music', 'music_1.wav');
     game.load.audio('jump', 'jump.wav');
     game.load.audio('fall', 'fall.wav');
     game.load.audio('stab', 'stab.wav');
@@ -79,6 +80,11 @@ var level = {
 
     game.physics.p2.gravity.y = 400;
     game.physics.p2.restitution = 0;
+
+    if (!music) {
+      music = game.add.sound('music', 0.1, true);
+      music.play();
+    }
   }, 
 
   update: function () {
