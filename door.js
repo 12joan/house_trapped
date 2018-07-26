@@ -12,6 +12,26 @@ class Door {
   enter() {
     player.sprite.body.velocity.x = 0;
     player.sprite.body.velocity.y = 0;
-    game.add.tween(player.sprite.body).to(this.destination, 400, Phaser.Easing.Quadratic.InOut, true);
+    var player_solid = true;
+
+    var flicker_loop = setInterval(function(){
+      if ( player_solid ) {
+        player.sprite.alpha = 0.2;
+      } else {
+        player.sprite.alpha = 1;
+      }
+
+      player_solid = !player_solid;
+    }, 50);
+    
+    game.add.tween(player.sprite.body).to(
+      this.destination, 
+      400, 
+      Phaser.Easing.Quadratic.InOut, 
+      true
+    ).onComplete.add(function(){
+      clearInterval(flicker_loop);
+      player.sprite.alpha = 1;
+    });
   };
 }
