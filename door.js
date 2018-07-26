@@ -10,9 +10,8 @@ class Door {
   }
 
   enter() {
-    player.sprite.body.x = this.destination.x;
-    player.sprite.body.y = this.destination.y;
     player.sprite.body.velocity.x = 0;
     player.sprite.body.velocity.y = 0;
+    game.add.tween(player.sprite.body).to(this.destination, 400, Phaser.Easing.Quadratic.InOut, true);
   };
 }
