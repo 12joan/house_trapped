@@ -11,6 +11,8 @@ class Door {
     this.sprite.body.onBeginContact.add(function () {
       player.sprite.body.x = destination.x;
       player.sprite.body.y = destination.y;
+      player.sprite.body.velocity.x = 0;
+      player.sprite.body.velocity.y = 0;
     });
   }
 }
