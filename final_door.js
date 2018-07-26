@@ -1,6 +1,6 @@
 class FinalDoor {
   constructor(x, y) {
-    this.sprite = doors.create(x, y, 'final_door');
+    this.sprite = doors.create(x+50, y-110, 'final_door');
     this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
 
     this.sprite.body.static = true;
