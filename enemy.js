@@ -14,6 +14,17 @@ class Enemy {
   }
 
   touched() {
-    player.die('stab', 1000);
+    var initial_pos = { x: player.sprite.x - 2000, y: player.sprite.y };
+    hand = game.add.sprite(initial_pos.x, initial_pos.y, 'hand');
+    hand.anchor.set(0.6, 0.6);
+    player.can_move = false;
+    player.stop_walking();
+    player.sprite.body.static = true;
+    player.sprite.body.velocity.x = 0;
+    player.sprite.body.velocity.y = 0;
+    game.add.tween(hand).to(player.sprite.position, 400, Phaser.Easing.Quadratic.InOut, true).onComplete.add(function() {
+      player.die('stab', 1000);
+      game.add.tween(hand).to(initial_pos, 400, Phaser.Easing.Quadratic.InOut, true)
+    });
   }
 }

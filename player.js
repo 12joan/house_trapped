@@ -17,9 +17,13 @@ class Player {
     this.sprite.body.setCollisionGroup( playerCollisionGroup );
     this.sprite.body.collides([ doorCollisionGroup, enemyCollisionGroup, platformCollisionGroup ]);
     this.sprite.body.onBeginContact.add(this.landed);
+
+    this.can_move = true;
   }
 
   walk(direction) {
+    if ( !this.can_move ) return;
+
     this.sprite.body.velocity.x = direction * 250;
     if ( this.can_jump ) {
       this.sprite.animations.play("run", 4, true);

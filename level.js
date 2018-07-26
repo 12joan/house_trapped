@@ -10,6 +10,7 @@ var level = {
     game.load.spritesheet('platform', 'Platform.png');
     game.load.spritesheet('door', 'door.png');
     game.load.spritesheet('final_door', 'final_door.png');
+    game.load.spritesheet('hand', 'hand.png');
     game.load.audio('jump', 'jump.wav');
     game.load.audio('fall', 'fall.wav');
     game.load.audio('stab', 'stab.wav');
