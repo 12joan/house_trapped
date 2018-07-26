@@ -15,6 +15,7 @@ var level = {
     game.load.audio('jump', 'jump.wav');
     game.load.audio('fall', 'fall.wav');
     game.load.audio('stab', 'stab.wav');
+    game.load.audio('door_open', 'door.wav');
   },
 
   create: function () {
