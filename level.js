@@ -1,4 +1,4 @@
-var player, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, doorCollisionGroup, platforms;
+var player, all_doors, platformCollisionGroup, playerCollisionGroup, enemyCollisionGroup, doorCollisionGroup, platforms;
 
 var level = {
   preload: function () {
@@ -17,6 +17,7 @@ var level = {
   },
 
   create: function () {
+    all_doors = [];
     game.physics.startSystem(Phaser.Physics.P2JS);
 
     game.add.sprite(0, 0, 'background');
@@ -59,10 +60,10 @@ var level = {
 	
 	for (i=0;i<lvldata1.doors.length;i+=1) {
        curr=lvldata1.doors[i]
-       new Door(curr.x,curr.y,{"x":curr.tx,"y":curr.ty})
+       all_doors.push( new Door(curr.x,curr.y,{"x":curr.tx,"y":curr.ty}) );
     }
 	curr=lvldata1.final_door
-	new FinalDoor(curr.x,curr.y)
+	all_doors.push( new FinalDoor(curr.x,curr.y) );
 //    new Platform(45, 1789, 62);
 //    new Platform(188, 1598, 57);
 //    new Platform(334, 1795, 91);
@@ -95,10 +96,12 @@ var level = {
     var keyD     = game.input.keyboard.addKey(Phaser.Keyboard.D);
     var keyRight = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
     var keySpace = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    var keyT     = game.input.keyboard.addKey(Phaser.Keyboard.T);
 
     var left  = keyH.isDown || keyA.isDown || keyLeft.isDown;
     var up    = keyK.isDown || keyW.isDown || keyUp.isDown    || keySpace.isDown;
     var right = keyL.isDown || keyD.isDown || keyRight.isDown;
+    var go_through_door = keyT.isDown;
 
     if (left) {
       player.walk(-1);
@@ -110,6 +113,20 @@ var level = {
 
     if (up) {
       player.jump();
+    }
+
+    if (go_through_door) {
+      for (var i = 0, len = all_doors.length; i < len; i++) {
+        var door = all_doors[i];
+
+        var boundsA = door.sprite.getBounds();
+        var boundsB = player.sprite.getBounds();
+
+        var overlapping = Phaser.Rectangle.intersects(boundsA, boundsB);
+        if (overlapping) {
+          door.enter();
+        }
+      }
     }
   }
 }

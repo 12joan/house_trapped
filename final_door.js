@@ -5,14 +5,11 @@ class FinalDoor {
 
     this.sprite.body.static = true;
     this.sprite.body.setCollisionGroup( doorCollisionGroup );
-    this.sprite.body.collides([ playerCollisionGroup ]);
+    this.sprite.body.collides([]);
 
-    this.sprite.body.onBeginContact.add(function () {
-      var url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-      var result = window.open(url);
-      if ( !result ) {
-        window.location = url;
-      }
-    });
+  }
+
+  enter() {
+    window.location = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
   }
 }
