@@ -1,6 +1,6 @@
 var game = new Phaser.Game(
-  800,
-  600, 
+  1600,
+  1200, 
   Phaser.CANVAS
 );
 
