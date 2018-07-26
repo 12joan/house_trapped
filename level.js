@@ -78,7 +78,7 @@ var level = {
 
 //    new FinalDoor(400, 1300);
 
-    game.physics.p2.gravity.y = 400;
+    game.physics.p2.gravity.y = 600;
     game.physics.p2.restitution = 0;
 
     if (!music) {

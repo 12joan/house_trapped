@@ -40,7 +40,7 @@ class Player {
 
   jump() {
     if ( this.can_jump ) {
-      this.sprite.body.velocity.y = -500;
+      this.sprite.body.velocity.y = -750;
       this.sprite.animations.stop("run");
       this.sprite.frame = 5;
       var sound = game.add.sound('jump', 0.2, false);
