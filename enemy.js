@@ -15,7 +15,7 @@ class Enemy {
 
   touched() {
     var initial_pos = { x: player.sprite.x - 2000, y: player.sprite.y };
-    hand = game.add.sprite(initial_pos.x, initial_pos.y, 'hand');
+    var hand = game.add.sprite(initial_pos.x, initial_pos.y, 'hand');
     hand.anchor.set(0.6, 0.6);
     player.can_move = false;
     player.stop_walking();
