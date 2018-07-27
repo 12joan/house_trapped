@@ -36,6 +36,8 @@ class Enemy {
   }
 
   touched() {
+    if ( player.teleporting ) return;
+
     var initial_pos = { x: player.sprite.x - 2000, y: player.sprite.y };
     var hand = game.add.sprite(initial_pos.x, initial_pos.y, 'hand');
     hand.anchor.set(0.6, 0.6);
