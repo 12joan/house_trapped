@@ -57,7 +57,7 @@ var level = {
 
     for (i=0;i<lvldata1.enemies.length;i+=1) {
         curr=lvldata1.enemies[i]
-        new Enemy(curr.type,curr.x,curr.y,)
+        new Enemy(curr.type,curr.x,curr.y, curr.does_fly, curr.fly_pos, curr.fly_speed);
     }
 	
 	for (i=0;i<lvldata1.doors.length;i+=1) {

@@ -1,5 +1,5 @@
 class Enemy {
-  constructor(type, x, y) {
+  constructor(type, x, y, does_fly, fly_pos, fly_speed) {
     this.sprite = enemies.create(x, y, type);
     var ratio = 870 / 298;
     this.sprite.height = 200;
@@ -11,6 +11,28 @@ class Enemy {
     this.sprite.body.setCollisionGroup( enemyCollisionGroup );
     this.sprite.body.collides([ playerCollisionGroup ]);
     this.sprite.body.onBeginContact.add(this.touched);
+
+    var sprite = this.sprite;
+
+    if ( !does_fly ) { 
+      return;
+    }
+
+    setInterval( function () {
+      game.add.tween(sprite.body).to( 
+        fly_pos, 
+        fly_speed, 
+        Phaser.Easing.Quadratic.InOut, 
+        true 
+      ).onComplete.add( function () {
+        game.add.tween(sprite.body).to( 
+          { x: x, y: y }, 
+          fly_speed, 
+          Phaser.Easing.Quadratic.InOut, 
+          true 
+        );
+      });
+    }, fly_speed * 2 );
   }
 
   touched() {
