@@ -19,6 +19,7 @@ var level = {
 
   create: function () {
     all_doors = [];
+    game.physics.startSystem(Phaser.Physics.P2JS);
 
     game.add.sprite(0, 0, 'background');
 
@@ -111,6 +112,7 @@ var level = {
       }
       else if (keyP.isDown) {
 
+          plt = new Platform(this.input.mousePointer.worldX , this.input.mousePointer.worldY, 100)
           plt.sprite.inputEnabled = true;
           plt.sprite.input.enableDrag();
           plt.sprite.events.onDragStart.add(this.onDragStart, this);
@@ -138,6 +140,9 @@ var level = {
 
    onDragStop: function(sprite, pointer) {
 
+       result = sprite.key + " dropped at x:" + pointer.x + " y: " + pointer.y;
+       sprite.position.x = pointer.worldX
+       sprite.position.y = pointer.worldY
     },
 
 
