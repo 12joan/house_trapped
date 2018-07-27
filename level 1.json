@@ -39,7 +39,7 @@
 		{"type":"knife","x":2549,"y":1365},
 		{"type":"knife","x":2661,"y":529,"does_fly":true,"fly_pos":{"x":2661,"y":329},"fly_speed":1000},
 		{"type":"fork","x":3525,"y":729,"does_fly":true,"fly_pos":{"x":3525,"y":329},"fly_speed":2500},
-		{"type":"knife","x":4273,"y":193,"does_fly":true,"fly_pos":{"x":4273,"y":1055},"fly_speed":500},
+		{"type":"knife","x":4273,"y":193,"does_fly":true,"fly_pos":{"x":4273,"y":955},"fly_speed":500},
 		{"type":"fork","x":6381,"y":201,"does_fly":true,"fly_pos":{"x":6381,"y":1800},"fly_speed":300},
 		{"type":"fork","x":7771,"y":741,"does_fly":true,"fly_pos":{"x":7871,"y":741},"fly_speed":1500}
 	],
@@ -47,7 +47,7 @@
 		{"x":1909,"y":1519,"tx":781,"ty":698},
 		{"x":481,"y":858,"tx":1780,"ty":1278},
 		{"x":4040,"y":1125,"tx":3364,"ty":1354},
-		{"x":3182,"y":1475,"tx":4247,"ty":1034},
+		{"x":3182,"y":1475,"tx":4200,"ty":1034},
 		{"x":6121,"y":447,"tx":9283,"ty":275},
 		{"x":9358,"y":377,"tx":5708,"ty":335}
 	],
