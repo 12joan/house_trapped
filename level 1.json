@@ -39,8 +39,8 @@
 		{"type":"knife","x":2549,"y":1365},
 		{"type":"knife","x":2661,"y":529,"does_fly":true,"fly_pos":{"x":2661,"y":329},"fly_speed":1000},
 		{"type":"fork","x":3525,"y":729,"does_fly":true,"fly_pos":{"x":3525,"y":329},"fly_speed":2500},
-		{"type":"knife","x":4273,"y":193,"does_fly":true,"fly_pos":{"x":4273,"y":955},"fly_speed":500},
-		{"type":"fork","x":6381,"y":201,"does_fly":true,"fly_pos":{"x":6381,"y":1800},"fly_speed":300},
+		{"type":"knife","x":4273,"y":0,"does_fly":true,"fly_pos":{"x":4273,"y":955},"fly_speed":500},
+		{"type":"fork","x":6381,"y":0,"does_fly":true,"fly_pos":{"x":6381,"y":1800},"fly_speed":300},
 		{"type":"fork","x":7771,"y":741,"does_fly":true,"fly_pos":{"x":7871,"y":741},"fly_speed":1500}
 	],
 	"doors": [
