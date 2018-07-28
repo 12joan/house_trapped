@@ -1,16 +1,13 @@
 class Enemy {
-<<<<<<< HEAD
-    constructor(type, x, y, isEditor) {
-        var ratio = 870 / 298;
-        var height = 200;
-        var width = height / ratio
-        if (isEditor == true) {
-            x -= width / 2
-            y -= height /2
-        }
 
   constructor(type, x, y, does_fly, fly_pos, fly_speed, isEditor) {
-
+            var ratio = 870 / 298;
+            var height = 200;
+            var width = height / ratio
+            if (isEditor == true) {
+                x -= width / 2
+                y -= height / 2
+            }
     this.sprite = enemies.create(x, y, type);
 
     this.sprite.height = height;

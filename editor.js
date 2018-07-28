@@ -56,7 +56,7 @@ var level = {
 
     for (i=0;i<lvldata1.enemies.length;i+=1) {
         curr=lvldata1.enemies[i]
-        var enm = new Enemy(curr.type, curr.x, curr.y, true)
+        var enm = new Enemy(curr.type, curr.x, curr.y, false, null,null, true)
 
         enm.sprite.inputEnabled = true;
         enm.sprite.input.enableDrag();
