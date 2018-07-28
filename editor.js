@@ -43,7 +43,10 @@ var level = {
 	lvldata1=JSON.parse(game.cache.getText('level_data1'))
 	curr=lvldata1.rick
 	player = new Player(curr.x,curr.y, true)
-
+    player.sprite.inputEnabled = true;
+    player.sprite.input.enableDrag();
+    player.sprite.events.onDragStart.add(this.onDragStart, this);
+    player.sprite.events.onDragStop.add(this.onDragStop, this);
 
     for (i=0;i<lvldata1.platforms.length;i+=1) {
         curr=lvldata1.platforms[i]
