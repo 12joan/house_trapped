@@ -1,12 +1,20 @@
 class Door {
-  constructor(x, y, d) {
-    this.destination = d;
-    this.sprite = doors.create(x+50, y-110, 'door');
-    this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
+  constructor(x, y, d, isEditor ) {
+      this.destination = d;
+      var offX = 50
+      var offY = -110
+      if (isEditor == true) {
+          offX = 0
+          offY = -210
+      }
+    this.sprite = doors.create(x + offX, y + offY, 'door');
+    if (isEditor === undefined || isEditor == false) {
+        this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
 
-    this.sprite.body.static = true;
-    this.sprite.body.setCollisionGroup( doorCollisionGroup );
-    this.sprite.body.collides([]);
+        this.sprite.body.static = true;
+        this.sprite.body.setCollisionGroup(doorCollisionGroup);
+        this.sprite.body.collides([]);
+    }
   }
 
   enter() {
