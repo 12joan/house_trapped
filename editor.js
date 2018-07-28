@@ -19,40 +19,38 @@ var level = {
 
   create: function () {
     all_doors = [];
-    game.physics.startSystem(Phaser.Physics.P2JS);
+
 
     game.add.sprite(0, 0, 'background');
 
     game.world.setBounds(0, 0, 10000, 2000);
 
-    platformCollisionGroup = game.physics.p2.createCollisionGroup();
-    playerCollisionGroup = game.physics.p2.createCollisionGroup();
-    enemyCollisionGroup = game.physics.p2.createCollisionGroup();
-    doorCollisionGroup = game.physics.p2.createCollisionGroup();
+
 
     platforms = game.add.group();
     platforms.enableBody = true;
     platforms.inputEnableChildren = true;
-    platforms.physicsBodyType = Phaser.Physics.P2JS;
     platforms.onChildInputDown.add(this.onDown, this);
     enemies = game.add.group();
     enemies.enableBody = true;
-    enemies.physicsBodyType = Phaser.Physics.P2JS;
+
 
     doors = game.add.group();
     doors.enableBody = true;
-    doors.physicsBodyType = Phaser.Physics.P2JS;
+    //doors.physicsBodyType = Phaser.Physics.P2JS;
 
 //    player = new Player(50, 1700);
 	lvldata1=JSON.parse(game.cache.getText('level_data1'))
 	curr=lvldata1.rick
-	player = new Player(curr.x,curr.y)
-
-	
+	player = new Player(curr.x,curr.y, true)
+    player.sprite.inputEnabled = true;
+    player.sprite.input.enableDrag();
+    player.sprite.events.onDragStart.add(this.onDragStart, this);
+    player.sprite.events.onDragStop.add(this.onDragStop, this);
 
     for (i=0;i<lvldata1.platforms.length;i+=1) {
         curr=lvldata1.platforms[i]
-        var plt = new Platform(curr.x1, curr.y, curr.x2 - curr.x1)
+        var plt = new Platform(curr.x1, curr.y, curr.x2 - curr.x1, true)
         plt.sprite.inputEnabled = true;
         plt.sprite.input.enableDrag();
         plt.sprite.events.onDragStart.add(this.onDragStart, this);
@@ -61,15 +59,31 @@ var level = {
 
     for (i=0;i<lvldata1.enemies.length;i+=1) {
         curr=lvldata1.enemies[i]
-        new Enemy(curr.type,curr.x,curr.y,)
+        var enm = new Enemy(curr.type, curr.x, curr.y, false, null,null, true)
+
+        enm.sprite.inputEnabled = true;
+        enm.sprite.input.enableDrag();
+        enm.sprite.events.onDragStart.add(this.onDragStart, this);
+        enm.sprite.events.onDragStop.add(this.onDragStop, this);
     }
 	
 	for (i=0;i<lvldata1.doors.length;i+=1) {
-       curr=lvldata1.doors[i]
-       all_doors.push( new Door(curr.x,curr.y,{"x":curr.tx,"y":curr.ty}) );
+        curr = lvldata1.doors[i]
+        var currDoor = new Door(curr.x, curr.y, { "x": curr.tx, "y": curr.ty }, true);
+        currDoor.sprite.inputEnabled = true;
+        currDoor.sprite.input.enableDrag();
+        currDoor.sprite.events.onDragStart.add(this.onDragStart, this);
+        currDoor.sprite.events.onDragStop.add(this.onDragStop, this);
+        all_doors.push(currDoor);
+
     }
-	curr=lvldata1.final_door
-    all_doors.push(new FinalDoor(curr.x, curr.y));
+    curr = lvldata1.final_door
+    var final = new FinalDoor(curr.x, curr.y, true)
+    final.sprite.inputEnabled = true;
+    final.sprite.input.enableDrag();
+    final.sprite.events.onDragStart.add(this.onDragStart, this);
+    final.sprite.events.onDragStop.add(this.onDragStop, this);
+    all_doors.push(final);
     
     cursors = game.input.keyboard.createCursorKeys();
     keyP = game.input.keyboard.addKey(Phaser.Keyboard.P)
@@ -136,13 +150,15 @@ var level = {
 
     result = "Dragging " + sprite.key;
 
+
    },
 
    onDragStop: function(sprite, pointer) {
 
-       result = sprite.key + " dropped at x:" + pointer.x + " y: " + pointer.y;
-       sprite.position.x = pointer.worldX
-       sprite.position.y = pointer.worldY
+
+       result = sprite.key + " dropped at x:" + pointer.worldX + " y: " + pointer.worldY;
+       sprite.x = pointer.worldX - sprite.width/2
+       sprite.y = pointer.worldY - sprite.height/2
     },
 
 

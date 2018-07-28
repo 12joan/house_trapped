@@ -1,23 +1,31 @@
 var on_ground, land_timer;
 
 class Player { 
-  constructor(x, y) {
-    this.sprite = game.add.sprite(x, y, 'player');
-    var ratio = 870 / 298;
-    this.sprite.height = 150;
-    this.sprite.width = this.sprite.height / ratio;
+    constructor(x, y, isEditor) {
+        var height = 150
+        var ratio = 870 / 298;
+        var width = height / ratio
+        if (isEditor == true) {
+            x -= width / 2
+            y -= height /2
+        }
+        this.sprite = game.add.sprite(x, y, 'player');
+
+    this.sprite.height = height;
+    this.sprite.width = width;
 
     this.sprite.animations.add("run", [1, 2, 3, 4]);
 
-    game.physics.p2.enable(this.sprite);
+    if (isEditor === undefined || isEditor == false ) {
+        game.physics.p2.enable(this.sprite);
 
-    this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
-    this.sprite.body.fixedRotation = true;
+        this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
+        this.sprite.body.fixedRotation = true;
 
-    this.sprite.body.setCollisionGroup( playerCollisionGroup );
-    this.sprite.body.collides([ enemyCollisionGroup, platformCollisionGroup ]);
-    this.sprite.body.onBeginContact.add(this.landed);
-
+        this.sprite.body.setCollisionGroup(playerCollisionGroup);
+        this.sprite.body.collides([enemyCollisionGroup, platformCollisionGroup]);
+        this.sprite.body.onBeginContact.add(this.landed);
+    }
     this.can_move = true;
   }
 

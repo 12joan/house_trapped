@@ -1,12 +1,20 @@
 class FinalDoor {
-  constructor(x, y) {
-    this.sprite = doors.create(x+50, y-110, 'final_door');
-    this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
+    constructor(x, y, isEditor) {
 
-    this.sprite.body.static = true;
-    this.sprite.body.setCollisionGroup( doorCollisionGroup );
-    this.sprite.body.collides([]);
+        var offX = 50
+        var offY = -110
+        if (isEditor == true) {
+            offX = 0
+            offY = -210
+        }
+        this.sprite = doors.create(x + offX, y + offY, 'final_door');
+      if (isEditor === undefined || isEditor == false) {
+          this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
 
+          this.sprite.body.static = true;
+          this.sprite.body.setCollisionGroup(doorCollisionGroup);
+          this.sprite.body.collides([]);
+      }
   }
 
   enter() {
