@@ -10,7 +10,7 @@ class Player {
             y -= height /2
         }
         this.sprite = game.add.sprite(x, y, 'player');
-
+        this.isEditor = isEditor
     this.sprite.height = height;
     this.sprite.width = width;
 
@@ -69,7 +69,27 @@ class Player {
     }        
     return result;
   }
+  get_key() {
+      return "rick"
+  }
+  get_value() {
+      // {"x":1909,"y":1519,"tx":781,"ty":698},
+      var height = 150
+      var ratio = 870 / 298;
+      var width = height / ratio
+      var result = {}
 
+      if (this.isEditor == true) {
+          result.x = this.sprite.x + width / 2
+          result.y = this.sprite.y + height / 2
+      } else {
+          result.x = this.sprite.x
+          result.y = this.sprite.y
+      }
+
+      return result
+
+  }
   landed() {
     player.sprite.frame = 0;
   }
