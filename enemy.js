@@ -1,4 +1,5 @@
 class Enemy {
+<<<<<<< HEAD
     constructor(type, x, y, isEditor) {
         var ratio = 870 / 298;
         var height = 200;
@@ -7,6 +8,9 @@ class Enemy {
             x -= width / 2
             y -= height /2
         }
+
+  constructor(type, x, y, does_fly, fly_pos, fly_speed, isEditor) {
+
     this.sprite = enemies.create(x, y, type);
 
     this.sprite.height = height;
@@ -18,10 +22,35 @@ class Enemy {
         this.sprite.body.setCollisionGroup(enemyCollisionGroup);
         this.sprite.body.collides([playerCollisionGroup]);
         this.sprite.body.onBeginContact.add(this.touched);
+
+        var sprite = this.sprite;
+
+        if ( !does_fly ) { 
+          return;
+        }
+
+        setInterval( function () {
+          game.add.tween(sprite.body).to( 
+            fly_pos, 
+            fly_speed, 
+            Phaser.Easing.Quadratic.InOut, 
+            true 
+          ).onComplete.add( function () {
+            game.add.tween(sprite.body).to( 
+              { x: x, y: y }, 
+              fly_speed, 
+              Phaser.Easing.Quadratic.InOut, 
+              true 
+            );
+          });
+        }, fly_speed * 2 );
+
     }
   }
 
   touched() {
+    if ( player.teleporting ) return;
+
     var initial_pos = { x: player.sprite.x - 2000, y: player.sprite.y };
     var hand = game.add.sprite(initial_pos.x, initial_pos.y, 'hand');
     hand.anchor.set(0.6, 0.6);

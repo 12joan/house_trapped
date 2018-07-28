@@ -20,15 +20,16 @@ var level = {
   create: function () {
     all_doors = [];
 
+
     game.add.sprite(0, 0, 'background');
 
     game.world.setBounds(0, 0, 10000, 2000);
 
 
+
     platforms = game.add.group();
     platforms.enableBody = true;
     platforms.inputEnableChildren = true;
-    //platforms.physicsBodyType = Phaser.Physics.P2JS;
     platforms.onChildInputDown.add(this.onDown, this);
     enemies = game.add.group();
     enemies.enableBody = true;
@@ -43,7 +44,6 @@ var level = {
 	curr=lvldata1.rick
 	player = new Player(curr.x,curr.y, true)
 
-	
 
     for (i=0;i<lvldata1.platforms.length;i+=1) {
         curr=lvldata1.platforms[i]
@@ -145,12 +145,13 @@ var level = {
 
  onDragStart: function(sprite, pointer) {
 
-     result = "Dragging " + sprite.key;
+    result = "Dragging " + sprite.key;
 
 
    },
 
    onDragStop: function(sprite, pointer) {
+
 
        result = sprite.key + " dropped at x:" + pointer.worldX + " y: " + pointer.worldY;
        sprite.x = pointer.worldX - sprite.width/2
