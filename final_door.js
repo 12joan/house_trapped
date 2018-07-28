@@ -18,6 +18,10 @@ class FinalDoor {
   }
 
   enter() {
-    window.location = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+    game.paused = true;
+    game.canvas.remove();
+    var iframe = document.getElementsByTagName('iframe')[0];
+    iframe.style.display = "inherit";
+    iframe.src += "&autoplay=1";
   }
 }

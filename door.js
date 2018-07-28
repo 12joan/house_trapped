@@ -18,6 +18,13 @@ class Door {
   }
 
   enter() {
+    if ( player.teleporting ) {
+      return;
+    }
+
+    game.add.sound('door_open', 1, false).play();
+    player.teleporting = true;
+
     player.sprite.body.velocity.x = 0;
     player.sprite.body.velocity.y = 0;
     var player_solid = true;
@@ -40,6 +47,7 @@ class Door {
     ).onComplete.add(function(){
       clearInterval(flicker_loop);
       player.sprite.alpha = 1;
+      player.teleporting = false;
     });
   };
 }

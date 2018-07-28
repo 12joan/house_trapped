@@ -15,6 +15,7 @@ var level = {
     game.load.audio('jump', 'jump.wav');
     game.load.audio('fall', 'fall.wav');
     game.load.audio('stab', 'stab.wav');
+    game.load.audio('door_open', 'door.wav');
   },
 
   create: function () {
@@ -56,7 +57,7 @@ var level = {
 
     for (i=0;i<lvldata1.enemies.length;i+=1) {
         curr=lvldata1.enemies[i]
-        new Enemy(curr.type,curr.x,curr.y,)
+        new Enemy(curr.type,curr.x,curr.y, curr.does_fly, curr.fly_pos, curr.fly_speed);
     }
 	
 	for (i=0;i<lvldata1.doors.length;i+=1) {
