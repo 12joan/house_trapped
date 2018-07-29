@@ -7,16 +7,36 @@ class Door {
           offX = 0
           offY = -210
       }
-    this.sprite = doors.create(x + offX, y + offY, 'door');
-    if (isEditor === undefined || isEditor == false) {
-        this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
+      this.isEditor = isEditor
+      this.sprite = doors.create(x + offX, y + offY, 'door');
+      if (isEditor === undefined || isEditor == false) {
+          this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
 
-        this.sprite.body.static = true;
-        this.sprite.body.setCollisionGroup(doorCollisionGroup);
-        this.sprite.body.collides([]);
-    }
+          this.sprite.body.static = true;
+          this.sprite.body.setCollisionGroup(doorCollisionGroup);
+          this.sprite.body.collides([]);
+      }
   }
+  get_key() {
+      return "doors"
+  }
+  get_value() {
+      // {"x":1909,"y":1519,"tx":781,"ty":698},
 
+      var result = {}
+
+      if (this.isEditor == true) {
+          result.x = this.sprite.x 
+          result.y = this.sprite.y +210
+      } else {
+          result.x = this.sprite.x -50
+          result.y = this.sprite.y +110
+      }
+      result.tx = this.destination.x
+      result.ty = this.destination.y
+      return result
+
+  }
   enter() {
     if ( player.teleporting ) {
       return;
