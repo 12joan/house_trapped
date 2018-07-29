@@ -11,9 +11,10 @@ function makeDraggable(obj, lvl) {
     // needed for delete
     obj.sprite.events.onInputOver.add(lvl.onInputOver, lvl);
     obj.sprite.events.onInputOut.add(lvl.onInputLeft, lvl);
-
+    obj.sprite.object = obj // now obj can get sprite, and sprite can get obj
     lvl.spriteset.push( obj)
 }
+
 
 function download(content, fileName, contentType) {
     var a = document.createElement("a");
@@ -21,6 +22,7 @@ function download(content, fileName, contentType) {
     a.href = URL.createObjectURL(file);
     a.download = fileName;
     a.click();
+    a.remove()
 }
 
 
@@ -39,7 +41,33 @@ var level = {
         game.load.spritesheet('hand', 'hand.png');
 
     },
-    
+    createDoorTarget: function (door) {
+        var doorTarget = doors.create(door.destination.x, door.destination.y, 'door')
+        doorTarget.width = door.sprite.width / 4
+        doorTarget.height = door.sprite.height / 4
+        doorTarget.alpha = 0.2
+        doorTarget.inputEnabled = true;
+        doorTarget.input.enableDrag();
+        doorTarget.events.onDragStart.add(this.onDragStart, this);
+        doorTarget.events.onDragStop.add(this.onDragStop, this);
+
+        door.childDoor = doorTarget
+    },
+    createEnemyRange: function (enemy) {
+        if (enemy.does_fly) {
+            var enemyRange = enemies.create(enemy.fly_pos.x, enemy.fly_pos.y, enemy.type)
+            enemyRange.width = enemy.sprite.width / 4
+            enemyRange.height = enemy.sprite.height / 4
+            enemyRange.alpha = 0.6
+            enemyRange.inputEnabled = true;
+            enemyRange.input.enableDrag();
+            enemyRange.events.onDragStart.add(this.onDragStart, this);
+            enemyRange.events.onDragStop.add(this.onDragStop, this);
+
+            enemy.childEnemy = enemyRange
+        }
+    },
+
     create: function () {
         all_doors = [];
 
@@ -80,7 +108,7 @@ var level = {
         for (i = 0; i < lvldata1.enemies.length; i += 1) {
             curr = lvldata1.enemies[i]
             var enm = new Enemy(curr.type, curr.x, curr.y, curr.does_fly, curr.fly_pos, curr.fly_speed, true)
-
+            this.createEnemyRange( enm)
             makeDraggable(enm, this)
         }
 
@@ -88,6 +116,7 @@ var level = {
             curr = lvldata1.doors[i]
             var currDoor = new Door(curr.x, curr.y, { "x": curr.tx, "y": curr.ty }, true);
             makeDraggable(currDoor, this)
+            this.createDoorTarget( currDoor)
             all_doors.push(currDoor);
 
         }
@@ -95,7 +124,7 @@ var level = {
         var final = new FinalDoor(curr.x, curr.y, true)
         makeDraggable(final, this)
         all_doors.push(final);
-
+        keyDel = game.input.keyboard.addKey(Phaser.Keyboard.DELETE);
         cursors = game.input.keyboard.createCursorKeys();
 
         //    new Platform(45, 1789, 62);
@@ -119,8 +148,35 @@ var level = {
         //  music.play();
         //}
     },
-
+    deleteSprite: function (theSprite)
+    {
+        // we need to delete the sprite, and its entry in the spriteset
+        var toDelete = -1
+        for (var i = 0; i < this.spriteset.length; i++) {
+            if (theSprite == this.spriteset[i].sprite) {
+                toDelete = i
+                break
+            }
+        }
+        if (toDelete != -1) {
+            var object = theSprite.object
+            if (object != null) {
+                if (typeof object.destroy === 'function') {
+                    object.destroy()
+                }
+            }
+            this.spriteset.splice(toDelete, 1)
+            theSprite.destroy( true)
+        }
+    },
     update: function () {
+        if (keyDel.isDown) {
+            if (this.hoverSprite != null) {
+                this.deleteSprite(this.hoverSprite)
+                this.hoverSprite = null
+            }
+        }
+
         if (cursors.up.isDown) {
             game.camera.y -= 4;
         }
@@ -142,8 +198,6 @@ var level = {
             if (event.code == "KeyP") {
                 plt = new Platform(this.input.mousePointer.worldX, this.input.mousePointer.worldY, 100, true)
                 makeDraggable(plt, this)
-                plt.sprite.events.onInputOver.add(this.onInputOver, this);
-                plt.sprite.events.onInputOut.add(this.onInputLeft, this);
 
             }
             else if (event.code == "KeyF") {
@@ -156,8 +210,9 @@ var level = {
             }
             else if (event.code == "KeyD") {
                 
-                var door = new Door(this.input.mousePointer.worldX, this.input.mousePointer.worldY, { "x": curr.tx, "y": curr.ty }, true);
+                var door = new Door(this.input.mousePointer.worldX, this.input.mousePointer.worldY, { "x": this.input.mousePointer.worldX - 200, "y": this.input.mousePointer.worldX -200 }, true);
                 makeDraggable(door, this)
+                this.createDoorTarget(door)
             }
             else if (event.code == "KeyE") {
 
@@ -169,7 +224,7 @@ var level = {
                 for (var i = 0; i < this.spriteset.length; i++) {
                     key = this.spriteset[i].get_key()
                     value = this.spriteset[i].get_value()
-                    if (key == "final_door" || key == "rick") {
+                    if (key == "final_door" || key == "rick") { // code the single items separately
                         json_result[key] = value
                     } else {
                         if (key in json_result) {
@@ -179,7 +234,30 @@ var level = {
                         }
                     }
                 }
-                download(JSON.stringify(json_result), 'level.json', 'text/plain')
+                download(JSON.stringify(json_result, null, 2), 'level.json', 'text/plain')
+            }
+            else if (event.code == "KeyM") {  // make an enemy movable / not movable.
+                if (this.hoverSprite != null && (this.hoverSprite.key == "fork" ||
+                    this.hoverSprite.key == "knife")) {
+                    if (this.hoverSprite.object.does_fly) {
+                        this.hoverSprite.object.does_fly = false
+                        if (this.hoverSprite.object.childEnemy) {
+                            this.hoverSprite.object.fly_pos = { x: this.hoverSprite.object.childEnemy.x, y: this.hoverSprite.object.childEnemy.y }
+                            this.hoverSprite.object.childEnemy.destroy(true)
+                            this.hoverSprite.object.childEnemy = null
+                        }
+                    } else {
+                        this.hoverSprite.object.does_fly = true
+                        
+                        if (this.hoverSprite.object.fly_pos == null) {
+                            this.hoverSprite.object.fly_pos = { x: this.hoverSprite.x, y : this.hoverSprite.y }
+                        }
+                        if (this.hoverSprite.object.fly_speed == null) {
+                            this.hoverSprite.object.fly_speed = 400
+                        }
+                        this.createEnemyRange(this.hoverSprite.object)
+                    }
+                }
             }
             else if (event.key == "+") {
                 console.log("keyPlus")
@@ -187,7 +265,14 @@ var level = {
                     var w = this.hoverSprite.width + 10
                     this.hoverSprite.width = w
                     console.log("new width = ", w)
-                }
+                } 
+                else if (this.hoverSprite != null &&
+                    (this.hoverSprite.key == "fork" ||
+                     this.hoverSprite.key == "knife" ) ) {
+                    var w = this.hoverSprite.object.fly_speed + 10
+                    result = "New fly speed = " + w
+                    this.hoverSprite.object.fly_speed = w
+                } 
             }
             else if (event.key == "-") {
                 console.log("keyMinus")
@@ -196,6 +281,13 @@ var level = {
                     this.hoverSprite.width = w
                     console.log("new width = ", w)
                 }
+                else if (this.hoverSprite != null &&
+                    (this.hoverSprite.key == "fork" ||
+                        this.hoverSprite.key == "knife")) {
+                    var w = this.hoverSprite.object.fly_speed - 10
+                    result = "New fly speed = " + w
+                    this.hoverSprite.object.fly_speed = w
+                } 
             }
         });
     },
