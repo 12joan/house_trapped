@@ -8,6 +8,7 @@ class Door {
           offY = -210
       }
       this.isEditor = isEditor
+      this.childDoor = null
       this.sprite = doors.create(x + offX, y + offY, 'door');
       if (isEditor === undefined || isEditor == false) {
           this.sprite.body.setRectangle(this.sprite.width, this.sprite.height);
@@ -15,6 +16,11 @@ class Door {
           this.sprite.body.static = true;
           this.sprite.body.setCollisionGroup(doorCollisionGroup);
           this.sprite.body.collides([]);
+      }
+    }
+  destroy() {
+      if (this.childDoor != null) {
+          this.childDoor.destroy( true )
       }
   }
   get_key() {
@@ -31,6 +37,10 @@ class Door {
       } else {
           result.x = this.sprite.x -50
           result.y = this.sprite.y +110
+      }
+      if (this.childDoor != null) {
+          this.destination.x = this.childDoor.x
+          this.destination.y = this.childDoor.y
       }
       result.tx = this.destination.x
       result.ty = this.destination.y

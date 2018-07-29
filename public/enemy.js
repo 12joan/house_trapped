@@ -13,6 +13,7 @@ class Enemy {
         this.does_fly = does_fly
         this.fly_pos = fly_pos
         this.fly_speed = fly_speed
+        this.childEnemy = null
 
         this.sprite = enemies.create(x, y, type);
 
@@ -66,6 +67,12 @@ class Enemy {
       player.die('stab', 1000);
       game.add.tween(hand).to(initial_pos, 400, Phaser.Easing.Quadratic.InOut, true)
     });
+    }
+
+  destroy() {
+      if (this.childEnemy != null) {
+          this.childEnemy.destroy(true)
+      }
   }
   get_key()
   {
@@ -84,6 +91,9 @@ class Enemy {
       } else {
           result.x = this.sprite.x
           result.y = this.sprite.y
+      }
+      if (this.childEnemy != null) {
+          this.fly_pos = { x: this.childEnemy.x, y: this.childEnemy.y}
       }
       if (this.does_fly !== undefined) {
           result.does_fly = this.does_fly

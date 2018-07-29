@@ -9,7 +9,6 @@ class Platform {
         this.sprite = platforms.create(nx, ny, 'platform');
         this.sprite.width = length;
         this.sprite.height = 20;
-        this.sprite.houseObject = this
         this.isEditor = isEditor
         if (isEditor == undefined || isEditor == false) {
             this.sprite.body.setRectangleFromSprite(this.sprite);
