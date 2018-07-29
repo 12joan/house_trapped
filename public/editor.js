@@ -70,7 +70,7 @@ var level = {
 
     create: function () {
         all_doors = [];
-
+        lvldata1 = JSON.parse(game.cache.getText('level_data1'))
 
         game.add.sprite(0, 0, 'background');
 
@@ -91,10 +91,10 @@ var level = {
         //doors.physicsBodyType = Phaser.Physics.P2JS;
 
         //    player = new Player(50, 1700);
-        lvldata1 = JSON.parse(game.cache.getText('level_data1'))
+        
         curr = lvldata1.rick
-        player = new Player(curr.x, curr.y, true)
-        makeDraggable(player, this)
+        this.player = new Player(curr.x, curr.y, true)
+        makeDraggable( this.player, this)
 
 
         for (i = 0; i < lvldata1.platforms.length; i += 1) {
@@ -213,6 +213,15 @@ var level = {
                 var door = new Door(this.input.mousePointer.worldX, this.input.mousePointer.worldY, { "x": this.input.mousePointer.worldX - 200, "y": this.input.mousePointer.worldX -200 }, true);
                 makeDraggable(door, this)
                 this.createDoorTarget(door)
+            }
+            else if (event.code == "KeyR") {
+
+                var plr = new Player(this.input.mousePointer.worldX, this.input.mousePointer.worldY, true);
+                if (this.player != null) {
+                    this.player.sprite.destroy(true)
+                }
+                makeDraggable(plr, this)
+                this.player = plr
             }
             else if (event.code == "KeyE") {
 
